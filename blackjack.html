@@ -15,14 +15,21 @@
   var playerHand;
   var dealerHand;
   var dealerChoise;
-  var result;
-  
+  var playerResult;
+  var finalScore;
+
   function drawRandomCard(deck){
     var randomIndex = Math.floor(deck.length * Math.random());
     return deck[randomIndex];
   }
 
   function startGame(){
+    if (window.confirm("Do you want to start BlackJack?")) {
+    startGame2();
+  }}
+
+  function startGame2(){
+    
     playerHand = [drawRandomCard(deck), drawRandomCard(deck)];
     dealerHand = [drawRandomCard(deck), drawRandomCard(deck)];
 
@@ -32,6 +39,10 @@
     console.log("Dealer Hand Value: " + getHandValue(dealerHand)); 
     console.log("------------SECOND ROUND-------------")
 
+    if(getHandValue(playerHand) === 21){
+      startGame();
+    }
+
     while (getHandValue(playerHand)<21){
       var dealerChoise = window.prompt("Choose between (1)HIT or (2)STAND");
         if(dealerChoise === "1"){
@@ -39,20 +50,17 @@
           console.log("New Player Hand: " + playerHand)
             if(getHandValue(playerHand)>21){
               console.log("Final Player Hand Value: " + getHandValue(playerHand));
-              var result = "BUSTED";
-              console.log(result);
+              var playerResult = "BUSTED";
+              console.log(playerResult);
               break;
             }
         }if(dealerChoise === "2"){
-          break;
           console.log("Final Player Hand Value: " + getHandValue(playerHand));
+          break;
         }      
     }
 
-    //meter algo para que si es BUSTED finalice el juego
-    //tambien hacer que black jack breakea todo el juego
-
-    while (getHandValue(dealerHand)<17){
+    while (getHandValue(dealerHand)<17 && playerResult!=="BUSTED"){
       dealerHand.push(drawRandomCard(deck));
       console.log("New Dealer Hand: " + dealerHand);
         if((getHandValue(dealerHand)<22) && (getHandValue(dealerHand)>16)){
@@ -63,7 +71,19 @@
             console.log("Final Player Hand Value: " + getHandValue(dealerHand));
             console.log("DEALER PASSED. YOU WIN");
             break;
-          }
+          } 
+    } 
+    finalresult();
+  }
+
+  function finalresult(){
+    var finalScore = getHandValue(playerHand) - getHandValue(dealerHand);
+    if (finalScore > 0) {
+      console.log("You Win")
+    } if (finalScore === 0) {
+      console.log("Draw")
+    } if (finalScore < 0) {
+      console.log("You Lose")
     }
   }
 
@@ -75,20 +95,7 @@
     return sum;
   }
 
-
   startGame();
-
-
-
-
-
-
-
-
-
-
-
-
 
   </script>
 
