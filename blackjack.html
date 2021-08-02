@@ -16,7 +16,9 @@
   var dealerHand;
   var dealerChoise;
   var playerResult;
+  var dealerResult;
   var finalScore;
+
 
   function drawRandomCard(deck){
     var randomIndex = Math.floor(deck.length * Math.random());
@@ -69,14 +71,16 @@
           }
         if(getHandValue(dealerHand)>21){
             console.log("Final Player Hand Value: " + getHandValue(dealerHand));
-            console.log("DEALER PASSED. YOU WIN");
+            var dealerResult = "DEALER PASSED. YOU WIN";
             break;
           } 
     } 
-    finalresult();
+    if(dealerResult !== "DEALER PASSED. YOU WIN" || playerResult !== "BUSTED"){
+      finalResult();
+    }
   }
 
-  function finalresult(){
+  function finalResult(){
     var finalScore = getHandValue(playerHand) - getHandValue(dealerHand);
     if (finalScore > 0) {
       console.log("You Win")
