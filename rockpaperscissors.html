@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+</head>
+
+<body>
+  <h1>Rock Paper Scissors</h1>
+
+<script>
+
+
+  
+
+  var gameOptions = ['SINGLE GAME', 'TOURNAMENT'];
+  var options = ['ROCK', 'SCISSORS', 'PAPER'];
+
+  //asking player choosing between two modes
+
+  var gameType = window.prompt("CHOOSE YOUR PLAY MODE!\nIntroduce (1) for a single game.\nIntroduce (2) for a tournament. Besto in winning 2 games");
+  var gameType = gameOptions[gameType-1];
+
+  if (gameType === 'SINGLE GAME') {
+  console.log("Single game")
+
+  //single game mode
+
+    var userChoise = window.prompt("WELLCOME TO SINGLE GAME!\nSelect your choise by introducing the number: (1)ROCK, (2)SCISSORS OR (3)PAPER");  
+    userChoise = options[userChoise-1];
+    console.log("Player choosed --> " + userChoise);
+
+    var randomComputerChoise = Math.floor(Math.random() * 3);
+    randomComputerChoise = options[randomComputerChoise];
+    console.log("Computer choosed --> " + randomComputerChoise);
+    resultCheck = userChoise + randomComputerChoise;
+
+      switch (resultCheck) {
+      case "ROCKSCISSORS":
+      case "PAPERROCK":
+      case "SCISSORSPAPER":
+      alert("User chooses: " + userChoise + "- Computer choosed: " + randomComputerChoise + "\nPLAYER WINS");
+    }
+
+    switch (resultCheck) {
+      case "ROCKPAPER":
+      case "PAPERSCISSORS":
+      case "SCISSORSROCK":
+      alert("User chooses: " + userChoise + "- Computer choosed: " + randomComputerChoise + "\nPLAYER LOSES");
+    }
+
+    switch (resultCheck) {
+      case "ROCKROCK":
+      case "PAPERPAPER":
+      case "SCISSORSSCISSORS":
+      alert("User chooses: " + userChoise + "- Computer choosed: " + randomComputerChoise + "\nPLAYER DRAWS");
+    }
+
+  //tournament mode
+
+  } if (gameType === 'TOURNAMENT') {
+
+    var currentResult = 0;
+    var userCounter = 0;
+    var computerCounter = 0;
+
+    while (userCounter < 2 && computerCounter < 2) {
+
+      var userChoise = window.prompt("WELLCOME TO THE TOURNAMENT!\nSelect your choise by introducing the number: (1)ROCK, (2)SCISSORS OR (3)PAPER");  
+      userChoise = options[userChoise-1];
+      console.log("Player choosed --> " + userChoise);
+
+      var randomComputerChoise = Math.floor(Math.random() * 3);
+      randomComputerChoise = options[randomComputerChoise];
+      console.log("Computer choosed --> " + randomComputerChoise);
+      resultCheck = userChoise + randomComputerChoise;
+
+      switch (resultCheck) {
+        case "ROCKSCISSORS":
+        case "PAPERROCK":
+        case "SCISSORSPAPER":
+          userCounter = userCounter + 1;
+          alert("User chooses: " + userChoise + "- Computer choosed: " + randomComputerChoise + "\nPLAYER WINS");
+      }
+
+      switch (resultCheck) {
+        case "ROCKPAPER":
+        case "PAPERSCISSORS":
+        case "SCISSORSROCK":
+          computerCounter = computerCounter + 1;
+          alert("User chooses: " + userChoise + "- Computer choosed: " + randomComputerChoise + "\nPLAYER LOSES");
+      }
+
+      switch (resultCheck) {
+        case "ROCKROCK":
+        case "PAPERPAPER":
+        case "SCISSORSSCISSORS":
+        alert("User chooses: " + userChoise + "- Computer choosed: " + randomComputerChoise + "\nPLAYER DRAWS");
+      }
+
+alert("Current Score: " + userCounter + " Computer Score: " + computerCounter);
+}
+
+if (userCounter > computerCounter) {
+  alert("Congratulations! You win!")
+} else {
+  alert("You are so bad...")
+}
+}
+
+
+
+
+</script>
+</body>
+
+</html>

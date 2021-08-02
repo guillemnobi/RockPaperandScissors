@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+</head>
+
+<body>
+  <h1>Black Jack</h1>
+
+  <script>
+
+  var deck = [2,3,4,5,6,7,8,9,10,10,10,10,11,2,3,4,5,6,7,8,9,10,10,10,10,11,
+  2,3,4,5,6,7,8,9,10,10,10,10,11,2,3,4,5,6,7,8,9,10,10,10,10,11];
+  var playerHand;
+  var dealerHand;
+  var dealerChoise;
+  var result;
+  
+  function drawRandomCard(deck){
+    var randomIndex = Math.floor(deck.length * Math.random());
+    return deck[randomIndex];
+  }
+
+  function startGame(){
+    playerHand = [drawRandomCard(deck), drawRandomCard(deck)];
+    dealerHand = [drawRandomCard(deck), drawRandomCard(deck)];
+
+    console.log("Player Hand: " + playerHand);
+    console.log("Player Hand Value: " + getHandValue(playerHand));
+    console.log("Dealer Hand: " + dealerHand);
+    console.log("Dealer Hand Value: " + getHandValue(dealerHand)); 
+    console.log("------------SECOND ROUND-------------")
+
+    while (getHandValue(playerHand)<21){
+      var dealerChoise = window.prompt("Choose between (1)HIT or (2)STAND");
+        if(dealerChoise === "1"){
+          playerHand.push(drawRandomCard(deck));
+          console.log("New Player Hand: " + playerHand)
+            if(getHandValue(playerHand)>21){
+              console.log("Final Player Hand Value: " + getHandValue(playerHand));
+              var result = "BUSTED";
+              console.log(result);
+              break;
+            }
+        }if(dealerChoise === "2"){
+          break;
+          console.log("Final Player Hand Value: " + getHandValue(playerHand));
+        }      
+    }
+
+    //meter algo para que si es BUSTED finalice el juego
+    //tambien hacer que black jack breakea todo el juego
+
+    while (getHandValue(dealerHand)<17){
+      dealerHand.push(drawRandomCard(deck));
+      console.log("New Dealer Hand: " + dealerHand);
+        if((getHandValue(dealerHand)<22) && (getHandValue(dealerHand)>16)){
+            console.log("Final Dealer Hand Value: " + getHandValue(dealerHand));
+            break;
+          }
+        if(getHandValue(dealerHand)>21){
+            console.log("Final Player Hand Value: " + getHandValue(dealerHand));
+            console.log("DEALER PASSED. YOU WIN");
+            break;
+          }
+    }
+  }
+
+  function getHandValue(hand){
+    var sum = 0;
+    for (i=0; i<hand.length; i++){
+      sum = sum + hand[i];
+    }
+    return sum;
+  }
+
+
+  startGame();
+
+
+
+
+
+
+
+
+
+
+
+
+
+  </script>
+
+
+</body>
+
+</html>
