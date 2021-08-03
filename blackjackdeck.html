@@ -10,21 +10,42 @@
 
   <script>
 
-  var deck = [2,3,4,5,6,7,8,9,10,10,10,10,11,2,3,4,5,6,7,8,9,10,10,10,10,11,
-  2,3,4,5,6,7,8,9,10,10,10,10,11,2,3,4,5,6,7,8,9,10,10,10,10,11];
-
   var playerHand;
   var dealerHand;
   var dealerChoise;
   var playerResult;
   var dealerResult;
   var finalScore;
+  var deck = [];
+  var randomCard = "";
+  var cardNumber = "";
 
+  var createDeck = function(){
+    var suits = ['D', 'C', 'H', 'S'];
+    var faces = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
+
+    for (i=0; i<suits.length; i++){
+      for (j=0; j<faces.length; j++){
+        deck.push(suits[i] + faces[j])
+    }}    
+  }
 
   function drawRandomCard(deck){
+    createDeck();
     var randomIndex = Math.floor(deck.length * Math.random());
-    return deck[randomIndex];
+    randomCard = (deck[randomIndex]);
+    console.log(randomCard);
+    cardNumber = randomCard.slice(1);
+    console.log(cardNumber);
+    return value();
   }
+
+  function value();
+    
+/// I DON'T KNOW HOW CAN I GET var cardNumber from here to calculate the value with a switch-case
+
+
+
 
   function startGame(){
     if (window.confirm("Do you want to start BlackJack?")) {
