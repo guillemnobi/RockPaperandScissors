@@ -10,42 +10,38 @@
 
   <script>
 
-  var playerHand;
-  var dealerHand;
+  var playerHand = [];
+  var dealerHand = [];
   var dealerChoise;
   var playerResult;
   var dealerResult;
   var finalScore;
-  var deck = [];
   var randomCard = "";
-  var cardNumber = "";
+  var currentDeck2;
+  var currentDeck = createDeck();
 
-  var createDeck = function(){
+  function createDeck(){
+    var deck = [];
     var suits = ['D', 'C', 'H', 'S'];
     var faces = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
 
     for (i=0; i<suits.length; i++){
       for (j=0; j<faces.length; j++){
-        deck.push(suits[i] + faces[j])
+        deck.push({suit: suits[i], face: faces[j]})
     }}    
+    return deck;
+    console.log(createDeck);
   }
 
-  function drawRandomCard(deck){
-    createDeck();
-    var randomIndex = Math.floor(deck.length * Math.random());
-    randomCard = (deck[randomIndex]);
-    console.log(randomCard);
-    cardNumber = randomCard.slice(1);
-    console.log(cardNumber);
-    return value();
-  }
+  function drawRandomCard(currentDeck){
 
-  function value();
+    var randomIndex = Math.floor(currentDeck.length * Math.random());
+    randomCard = (currentDeck[randomIndex]);
+    currentDeck = currentDeck.splice(randomIndex, 1);
+    return randomCard.suit + randomCard.face;
+  }
     
-/// I DON'T KNOW HOW CAN I GET var cardNumber from here to calculate the value and pass it to getHandValue
-/// 
-
-
+/////////////////////////////////////////////////
 
 
   function startGame(){
@@ -55,14 +51,15 @@
 
   function startGame2(){
     
-    playerHand = [drawRandomCard(deck), drawRandomCard(deck)];
-    dealerHand = [drawRandomCard(deck), drawRandomCard(deck)];
+    playerHand = [drawRandomCard(currentDeck), drawRandomCard(currentDeck)];
+    dealerHand = [drawRandomCard(currentDeck), drawRandomCard(currentDeck)];
 
     console.log("Player Hand: " + playerHand);
     console.log("Player Hand Value: " + getHandValue(playerHand));
     console.log("Dealer Hand: " + dealerHand);
     console.log("Dealer Hand Value: " + getHandValue(dealerHand)); 
     console.log("------------SECOND ROUND-------------")
+    console.log(currentDeck);
 
     if(getHandValue(playerHand) === 21){
       startGame();
@@ -118,11 +115,18 @@
   }
 
   function getHandValue(hand){
-    var sum = 0;
-    for (i=0; i<hand.length; i++){
-      sum = sum + hand[i];
+    sum = 0;
+    for (i = 0; i <= hand.length; i++) {
+      sum = sum + hand[faces];
     }
     return sum;
+
+
+    // var sum = 0;
+    // for (i=0; i<hand.length; i++){
+    //   sum = sum + hand[i];
+    // }
+    // return sum;
   }
 
   startGame();
