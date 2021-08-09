@@ -10,8 +10,9 @@
 
   <script>
 
-  var playerHand = [];
-  var dealerHand = [];
+  var playerHand;
+  var dealerHand;
+  var selectionHand = [];
   var dealerChoise;
   var playerResult;
   var dealerResult;
@@ -29,6 +30,7 @@
       for (j=0; j<faces.length; j++){
         deck.push({suit: suits[i], face: faces[j]})
     }}    
+    //como iterar y convertir a objeto
     return deck;
     console.log(createDeck);
   }
@@ -37,11 +39,14 @@
 
     var randomIndex = Math.floor(currentDeck.length * Math.random());
     randomCard = (currentDeck[randomIndex]);
+    console.log(randomCard);  
     currentDeck = currentDeck.splice(randomIndex, 1);
+    //selectionHand.push(currentDeck[randomIndex]);
     return randomCard.suit + randomCard.face;
   }
     
 /////////////////////////////////////////////////
+//dudas principales: no se como crear un array y pasar drawrandomcard como objeto en ese array.
 
 
   function startGame(){
@@ -51,15 +56,21 @@
 
   function startGame2(){
     
-    playerHand = [drawRandomCard(currentDeck), drawRandomCard(currentDeck)];
-    dealerHand = [drawRandomCard(currentDeck), drawRandomCard(currentDeck)];
+    playerHand = [drawRandomCard(currentDeck) + " " + drawRandomCard(currentDeck)];
+    dealerHand = [drawRandomCard(currentDeck) + " " + drawRandomCard(currentDeck)];
 
+    //console.log(selectionHand);
     console.log("Player Hand: " + playerHand);
     console.log("Player Hand Value: " + getHandValue(playerHand));
     console.log("Dealer Hand: " + dealerHand);
     console.log("Dealer Hand Value: " + getHandValue(dealerHand)); 
     console.log("------------SECOND ROUND-------------")
     console.log(currentDeck);
+
+//     currentDeck.forEach((element, index, array) => {
+//     console.log(element); // 100, 200, 300
+//     console.log(index); // 0, 1, 2
+// });
 
     if(getHandValue(playerHand) === 21){
       startGame();
@@ -114,20 +125,39 @@
     }
   }
 
-  function getHandValue(hand){
-    sum = 0;
-    for (i = 0; i <= hand.length; i++) {
-      sum = sum + hand[faces];
+  getHandValue = function (hand) {
+  var sum = 0;
+  for (var i = 0; i < hand.length; i++) {
+    var face = hand[i].face;
+    switch (face) {
+      case '10':
+      case 'J':
+      case 'Q':
+      case 'K':
+        sum += 10;
+        break;
+      case 'A':
+        sum += 1;
+        break;
+      default:
+        sum += parseInt(face);
     }
-    return sum;
-
-
-    // var sum = 0;
-    // for (i=0; i<hand.length; i++){
-    //   sum = sum + hand[i];
-    // }
-    // return sum;
   }
+    return sum;
+  }
+
+
+
+
+  // function getHandValue(hand){
+  //   hand.forEach((element) => {
+  //   console.log(element.faces); 
+  // })
+  // };
+
+
+
+
 
   startGame();
 
