@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+</head>
+
+<body>
+  <h1>Black Jack</h1>
+
+  <script>
+
+  var playerHand;
+  var dealerHand;
+  var selectionHand = [];
+  var dealerChoise;
+  var playerResult;
+  var dealerResult;
+  var finalScore;
+  var randomCard = "";
+  var currentDeck2;
+  var currentDeck = createDeck();
+
+  function createDeck(){
+    var deck = [];
+    var suits = ['D', 'C', 'H', 'S'];
+    var faces = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
+
+    for (i=0; i<suits.length; i++){
+      for (j=0; j<faces.length; j++){
+        deck.push({suit: suits[i], face: faces[j]})
+    }}    
+    //como iterar y convertir a objeto
+    return deck;
+    console.log(createDeck);
+  }
+
+  function drawRandomCard(currentDeck){
+
+    var randomIndex = Math.floor(currentDeck.length * Math.random());
+    randomCard = (currentDeck[randomIndex]);
+    console.log(randomCard);  
+    currentDeck = currentDeck.splice(randomIndex, 1);
+    //selectionHand.push(currentDeck[randomIndex]);
+    return randomCard;
+  }
+
+  function startGame(){
+    if (window.confirm("Do you want to start BlackJack?")) {
+    startGame2();
+  }}
+
+  function startGame2(){
+    
+    playerHand = [drawRandomCard(currentDeck), drawRandomCard(currentDeck)];
+    dealerHand = [drawRandomCard(currentDeck), drawRandomCard(currentDeck)];
+
+    //console.log(selectionHand);
+    console.log("Initial Player Hand: " + playerHand[0].face + playerHand[0].suit + " & " + playerHand[1].face + playerHand[1].suit);
+    console.log("Player Hand Value: " + getHandValue(playerHand));
+    console.log("Initial Dealer Hand: " + dealerHand[0].face + dealerHand[0].suit + " & " + dealerHand[1].face + dealerHand[1].suit);
+    console.log("Dealer Hand Value: " + getHandValue(dealerHand)); 
+    console.log("------------SECOND ROUND-------------")
+    console.log(currentDeck);
+
+    if(getHandValue(playerHand) === 21){
+      startGame();
+    }
+
+    while (getHandValue(playerHand)<21){
+      var dealerChoise = window.prompt("Choose between (1)HIT or (2)STAND");
+        if(dealerChoise === "1"){
+          playerHand.push(drawRandomCard(currentDeck));
+          console.log(playerHand);
+            if(getHandValue(playerHand)>21){
+              console.log("Final Player Hand Value: " + getHandValue(playerHand));
+              var playerResult = "BUSTED";
+              console.log(playerResult);
+              break;
+            }
+        }if(dealerChoise === "2"){
+          console.log("Final Player Hand Value: " + getHandValue(playerHand));
+          break;
+        }      
+    }
+
+    while (getHandValue(dealerHand)<17 && playerResult!=="BUSTED"){
+      dealerHand.push(drawRandomCard(currentDeck));
+      console.log(dealerHand);
+        if((getHandValue(dealerHand)<22) && (getHandValue(dealerHand)>16)){
+            console.log("Final Dealer Hand Value: " + getHandValue(dealerHand));
+            break;
+          }
+        if(getHandValue(dealerHand)>21){
+            console.log("Final Dealer Hand Value: " + getHandValue(dealerHand));
+            var dealerResult = "DEALER PASSED. YOU WIN";
+            console.log(dealerResult);
+            break;
+          } 
+    } 
+    if(dealerResult === "DEALER PASSED. YOU WIN" || playerResult === "BUSTED"){
+      console.log("Finished");
+    } else {
+      finalResult();
+    }
+  }
+
+  function finalResult(){
+    var finalScore = getHandValue(playerHand) - getHandValue(dealerHand);
+    if (finalScore > 0) {
+      console.log("You Win")
+    } if (finalScore === 0) {
+      console.log("Draw")
+    } if (finalScore < 0) {
+      console.log("You Lose")
+    }
+  }
+
+  getHandValue = function (hand) {
+  var sum = 0;
+  for (var i = 0; i < hand.length; i++) {
+    var face = hand[i].face;
+    switch (face) {
+      case '10':
+      case 'J':
+      case 'Q':
+      case 'K':
+        sum += 10;
+        break;
+      case 'A':
+        sum += 1;
+        break;
+      default:
+        sum += parseInt(face);
+    }
+  }
+    return sum;
+  }
+
+
+
+
+  // function getHandValue(hand){
+  //   hand.forEach((element) => {
+  //   console.log(element.faces); 
+  // })
+  // };
+
+
+
+
+
+  startGame();
+
+  </script>
+
+
+</body>
+
+</html>
