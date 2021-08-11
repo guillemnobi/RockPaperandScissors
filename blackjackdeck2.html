@@ -20,6 +20,18 @@
   var randomCard = "";
   var currentDeck2;
   var currentDeck = createDeck();
+  var betPlace = 0;
+  var playerStack = 100;
+  var finish;
+
+  // function bet(){
+  //   var betPlace = window.prompt("Place your Bet. The ammount need to be ammounts of 10usd. Minimum 10usd and maximum 100usd");
+  //   betPlace = betPlace % 10
+  //     if (betPlace !== 0) {
+  //       alert("Bet not correct. Please, try again")
+  //       bet();
+  //     }
+  // }
 
   function createDeck(){
     var deck = [];
@@ -52,16 +64,22 @@
 
   function startGame2(){
     
+    alert("Wellcome to BlackJack")
+    // bet();
     playerHand = [drawRandomCard(currentDeck), drawRandomCard(currentDeck)];
     dealerHand = [drawRandomCard(currentDeck), drawRandomCard(currentDeck)];
 
     //console.log(selectionHand);
     console.log("Initial Player Hand: " + playerHand[0].face + playerHand[0].suit + " & " + playerHand[1].face + playerHand[1].suit);
-    console.log("Player Hand Value: " + getHandValue(playerHand));
+    alert("Player Hand Value: " + getHandValue(playerHand));
     console.log("Initial Dealer Hand: " + dealerHand[0].face + dealerHand[0].suit + " & " + dealerHand[1].face + dealerHand[1].suit);
-    console.log("Dealer Hand Value: " + getHandValue(dealerHand)); 
+    alert("Dealer Hand Value: " + getHandValue(dealerHand)); 
     console.log("------------SECOND ROUND-------------")
     console.log(currentDeck);
+
+
+
+
 
     if(getHandValue(playerHand) === 21){
       startGame();
@@ -71,15 +89,15 @@
       var dealerChoise = window.prompt("Choose between (1)HIT or (2)STAND");
         if(dealerChoise === "1"){
           playerHand.push(drawRandomCard(currentDeck));
-          console.log(playerHand);
+          alert("Current hand Value: " + getHandValue(playerHand));
             if(getHandValue(playerHand)>21){
-              console.log("Final Player Hand Value: " + getHandValue(playerHand));
+              alert("Final Player Hand Value: " + getHandValue(playerHand));
               var playerResult = "BUSTED";
-              console.log(playerResult);
+              alert(playerResult);
               break;
             }
         }if(dealerChoise === "2"){
-          console.log("Final Player Hand Value: " + getHandValue(playerHand));
+          alert("Final Player Hand Value: " + getHandValue(playerHand));
           break;
         }      
     }
@@ -88,13 +106,13 @@
       dealerHand.push(drawRandomCard(currentDeck));
       console.log(dealerHand);
         if((getHandValue(dealerHand)<22) && (getHandValue(dealerHand)>16)){
-            console.log("Final Dealer Hand Value: " + getHandValue(dealerHand));
+            alert("Final Dealer Hand Value: " + getHandValue(dealerHand));
             break;
           }
         if(getHandValue(dealerHand)>21){
-            console.log("Final Dealer Hand Value: " + getHandValue(dealerHand));
+            alert("Final Dealer Hand Value: " + getHandValue(dealerHand));
             var dealerResult = "DEALER PASSED. YOU WIN";
-            console.log(dealerResult);
+            alert(dealerResult);
             break;
           } 
     } 
@@ -103,16 +121,29 @@
     } else {
       finalResult();
     }
-  }
+
+    finish = window.prompt("Do you want to keep playing? (1)YES");
+      if (finish == 1) {
+        startGame2();
+      } else {
+        alert("Thanks for playing");
+  }}
+
 
   function finalResult(){
     var finalScore = getHandValue(playerHand) - getHandValue(dealerHand);
     if (finalScore > 0) {
-      console.log("You Win")
+      // playerStack = playerStack + betPlace;
+      alert("You Win.")
+
     } if (finalScore === 0) {
-      console.log("Draw")
+      // playerStack = playerStack + betPlace;
+      alert("You Draw.")
+
     } if (finalScore < 0) {
-      console.log("You Lose")
+      // playerStack = playerStack + betPlace;
+      alert("You Lose.")
+
     }
   }
 
@@ -128,8 +159,12 @@
         sum += 10;
         break;
       case 'A':
-        sum += 1;
+        if (sum < 11) {
+          sum = sum + 11;
+        } if (sum >= 11) {
+        sum = sum + 1;
         break;
+      }
       default:
         sum += parseInt(face);
     }
